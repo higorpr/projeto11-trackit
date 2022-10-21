@@ -1,21 +1,91 @@
+import axios from "axios";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
+import ProjectContext from "../../constants/Context";
+import { signUpUrl } from "../../constants/Urls";
 
 export default function RegistrationPage() {
+    const { user, setUser } = useContext(ProjectContext);
+    const [loading, setLoading] = useState(false);
+    
+
+    function signUp(event) {
+        event.preventDefault();
+        setLoading(true)
+        const body = {
+            email: user.email,
+            name: user.name,
+            image: user.image,
+            password: user.password,
+        };
+
+        axios
+            .post(signUpUrl, body)
+            .then((res) => {
+                console.log(res);
+                setLoading(false)
+                setUser({...user, email:''})
+                setUser({...user, password:''})
+            })
+            .catch((err) => {
+                console.log(err)
+                setLoading(false)
+            });
+    }
+
     return (
         <StyledPage>
             <img src={logo} alt="logo" />
-            <StyledForm>
-                <input type="text" id="email" placeholder="email" />
-                <input type="text" id="password" placeholder="senha" />
-                <input type="text" id="name" placeholder="nome" />
-                <input type="text" id="image" placeholder="foto" />
+            <StyledForm onSubmit={signUp}>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="email"
+                    value={user.email}
+                    onChange={(e) => {
+                        setUser({ ...user, email: e.target.value });
+                    }}
+                    required
+                    disabled={(loading === true) ? true : false}
+                />
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="senha"
+                    value={user.password}
+                    onChange={(e) => {
+                        setUser({ ...user, password: e.target.value });
+                    }}
+                    required
+                    disabled={(loading === true) ? true : false}
+                />
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="nome"
+                    value={user.name}
+                    onChange={(e) => {
+                        setUser({ ...user, name: e.target.value });
+                    }}
+                    required
+                    disabled={(loading === true) ? true : false}
+                />
+                <input
+                    type="url"
+                    id="image"
+                    placeholder="foto"
+                    value={user.image}
+                    onChange={(e) => {
+                        setUser({ ...user, image: e.target.value });
+                    }}
+                    required
+                    disabled={(loading === true) ? true : false}
+                />
+                <StyledButton type="submit">Cadastrar</StyledButton>
             </StyledForm>
-            <StyledButton>Cadastrar</StyledButton>
-            <StyledLink to="/registration">
-                Já tem uma conta? Faça o login!
-            </StyledLink>
+            <StyledLink to="/">Já tem uma conta? Faça o login!</StyledLink>
         </StyledPage>
     );
 }

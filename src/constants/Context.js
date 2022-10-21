@@ -2,4 +2,4 @@ import { createContext } from "react";
 
 const ProjectContext = createContext();
 
-export {ProjectContext};
+export default ProjectContext;
