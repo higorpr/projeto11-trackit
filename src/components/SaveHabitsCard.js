@@ -1,23 +1,88 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect } from 'react';
-import Day from "./Day";
+import { useState } from "react";
+import DaySave from "./DaySave";
+import { habitsUrl } from "../constants/Urls";
+import { weekdays } from "../constants/constants";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function SaveHabitsCard() {
-    const weekdays = [0,1,2,3,4,5,6];
+export default function SaveHabitsCard({
+    setSaveHabit,
+    user,
+    habit,
+    setHabit,
+    getHabits,
+}) {
+    const [loading, setLoading] = useState(false);
+
+    function cancelHabit(event) {
+        event.preventDefault();
+        setSaveHabit(false);
+    }
+
+    function saveHabit(event) {
+        event.preventDefault();
+        setLoading(true);
+        const body = { name: habit.name, days: habit.days };
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        axios
+            .post(habitsUrl, body, config)
+            .then((res) => {
+                const resetHabit = { name: "", days: [] };
+                console.log(res);
+                setHabit(resetHabit);
+                getHabits();
+                setSaveHabit(false);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                alert(err.response.data.message);
+                setLoading(false);
+            });
+    }
 
     return (
         <StyledCard>
-            <input type="text" placeholder="nome do hábito" />
-            <ButtonContainer>
-                {weekdays.map((day, idx) => (
-                    <Day key={idx} day={day} />
-                ))}
-            </ButtonContainer>
-            <LowerContainer>
-                <CancelButton>Cancelar</CancelButton>
-                <SaveButton>Salvar</SaveButton>
-            </LowerContainer>
+            <form>
+                <input
+                    type="text"
+                    placeholder="nome do hábito"
+                    required
+                    value={habit.name}
+                    onChange={(e) => {
+                        setHabit({ ...habit, name: e.target.value });
+                    }}
+                    disabled={loading}
+                />
+                <ButtonContainer>
+                    {weekdays.map((day, idx) => (
+                        <DaySave
+                            key={idx}
+                            day={day}
+                            habit={habit}
+                            setHabit={setHabit}
+                            loading={loading}
+                        />
+                    ))}
+                </ButtonContainer>
+                <LowerContainer>
+                    <CancelButton onClick={cancelHabit} disabled={loading}>
+                        Cancelar
+                    </CancelButton>
+                    <SaveButton onClick={saveHabit} disabled={loading}>
+                        {loading === true ? (
+                            <ThreeDots width="43" height="11" color="#ffffff" />
+                        ) : (
+                            <p>Salvar</p>
+                        )}
+                    </SaveButton>
+                </LowerContainer>
+            </form>
         </StyledCard>
     );
 }
@@ -84,4 +149,8 @@ const SaveButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:disabled {
+        opacity: 0.7;
+    }
 `;

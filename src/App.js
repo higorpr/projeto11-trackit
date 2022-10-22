@@ -9,7 +9,6 @@ import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import ProjectContext from "./constants/Context";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -17,13 +16,10 @@ function App() {
         image: "",
         token: "",
     });
-    
 
     return (
         <ProjectContext.Provider
             value={{
-                loggedIn,
-                setLoggedIn,
                 user,
                 setUser
             }}

@@ -1,13 +1,28 @@
+import userEvent from "@testing-library/user-event";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function NavBar() {
+export default function NavBar({ user, setUser }) {
+    const navigate = useNavigate();
+
+    function reload() {
+        if (window.confirm('Você gostaria de se desconectar e voltar para a página de login?')) {
+            const newUser = {
+                email: "",
+                password: "",
+                name: "",
+                image: "",
+                token: "",
+            };
+
+            setUser(newUser);
+            navigate("/");
+        }
+    }
     return (
         <StyledHeader>
-            <p>TrackIt</p>
-            <img
-                src="https://cdns-images.dzcdn.net/images/artist/77220ccb5a36d0e5df2c9e47f2c89de4/500x500.jpg"
-                alt="user icon"
-            />
+            <p onClick={reload}>TrackIt</p>
+            <img src={user.image} alt="user icon" />
         </StyledHeader>
     );
 }
@@ -23,9 +38,10 @@ const StyledHeader = styled.div`
     padding: 0 18px;
     box-sizing: border-box;
     position: fixed;
-    top:0;
+    top: 0;
     left: 0;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+    z-index: 1;
 
     p {
         font-family: "Playball";

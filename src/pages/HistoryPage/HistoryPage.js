@@ -2,14 +2,18 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import { useContext } from "react";
 import styled from "styled-components";
+import ProjectContext from "../../constants/Context";
 
 export default function HistoryPage() {
+    const { user, setUser } = useContext(ProjectContext);
     return (
         <>
-            <NavBar />
+            <NavBar setUser={setUser} user={user} />
             <StyledPage>
                 <h1>Histórico</h1>
-                <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
+                <p>
+                    Em breve você poderá ver o histórico dos seus hábitos aqui!
+                </p>
             </StyledPage>
             <Footer />
         </>
@@ -28,7 +32,7 @@ const StyledPage = styled.div`
     box-sizing: border-box;
 
     h1 {
-        color: #126BA5;
+        color: #126ba5;
         font-size: 23px;
         font-weight: 400;
     }

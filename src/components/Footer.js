@@ -53,6 +53,7 @@ const StyledFooter = styled.div`
     align-items: center;
     padding: 0 32px;
     box-sizing: border-box;
+    z-index: 1;
 `;
 const ProgressBarDiv = styled.div`
     height: 91px;

@@ -1,16 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-export default function Day({ day, targetDays = [], habit, setHabit }) {
-    let dayString;
+export default function DaySave({ day, habit, setHabit, loading }) {
+    
+    const [clicked, setClicked] = useState(false);
     let borderColor = "#d4d4d4";
     let backgroundColor = "#ffffff";
     let color = "#DBDBDB";
+    let dayString;
 
-    if (targetDays.includes(day)) {
+    if (clicked === true || habit.days.includes(day)) {
         borderColor = "#CFCFCF";
         backgroundColor = "#CFCFCF";
         color = "#ffffff";
     }
+
     switch (day) {
         case 0:
             dayString = "D";
@@ -35,11 +39,25 @@ export default function Day({ day, targetDays = [], habit, setHabit }) {
             break;
     }
 
+    function setDay(event) {
+        event.preventDefault()
+        let days;
+        if (habit.days.includes(day) === true) {
+            days = habit.days.filter((d) => d !== day);
+        } else {
+            days = [...habit.days, day];
+        }
+        setHabit({ ...habit, days: days });        
+        setClicked(!clicked);
+    }
+
     return (
         <DayButton
             borderColor={borderColor}
             backgroundColor={backgroundColor}
             color={color}
+            onClick={setDay}
+            disabled={loading}
         >
             {dayString}
         </DayButton>

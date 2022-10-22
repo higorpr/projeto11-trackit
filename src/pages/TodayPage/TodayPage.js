@@ -2,11 +2,15 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styled from "styled-components";
 import TodayList from "../../components/TodayList";
+import { useContext } from "react";
+import ProjectContext from "../../constants/Context";
 
 export default function TodayPage() {
+    const { user, setUser } = useContext(ProjectContext);
+
     return (
         <>
-            <NavBar />
+            <NavBar setUser={setUser} user={user}/>
             <StyledPage>
                 <PageTitle>Segunda, 17/05</PageTitle>
                 <PageP>Nenhum hábito concluído ainda</PageP>

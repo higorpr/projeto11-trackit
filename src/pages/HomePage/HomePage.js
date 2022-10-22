@@ -1,17 +1,20 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import ProjectContext from "../../constants/Context";
 import { loginUrl } from "../../constants/Urls";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HomePage() {
     const { user, setUser } = useContext(ProjectContext);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     function login(event) {
         event.preventDefault();
+        setLoading(true);
         const body = {
             email: user.email,
             password: user.password,
@@ -20,10 +23,27 @@ export default function HomePage() {
         axios
             .post(loginUrl, body)
             .then((res) => {
-                console.log(res);
-                setUser({ ...user, token: res.data.token });
+                const newUser = {
+                    email: res.data.email,
+                    password: res.data.password,
+                    name: res.data.name,
+                    image: res.data.image,
+                    token: res.data.token,
+                };
+                setUser(newUser);
+                
+                navigate("/today");
+                setLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err.response);
+                if (err.response.status === 422) {
+                    alert("Campo e-mail inválido");
+                } else {
+                    alert(err.response.data.message);
+                }
+                setLoading(false);
+            });
     }
     return (
         <StyledPage>
@@ -38,7 +58,7 @@ export default function HomePage() {
                         setUser({ ...user, email: e.target.value });
                     }}
                     required
-                    disabled={loading === true ? true : false}
+                    disabled={loading}
                 />
                 <input
                     type="password"
@@ -49,10 +69,18 @@ export default function HomePage() {
                         setUser({ ...user, password: e.target.value });
                     }}
                     required
-                    disabled={loading === true ? true : false}
+                    disabled={loading}
                 />
-                <StyledButton type="submit" onClick={login}>
-                    Entrar
+                <StyledButton
+                    type="submit"
+                    disabled={loading}
+                    onClick={login}
+                >
+                    {loading === true ? (
+                        <ThreeDots width="50" height="13" color="#ffffff" />
+                    ) : (
+                        <p>Entrar</p>
+                    )}
                 </StyledButton>
             </StyledForm>
             <StyledLink to="/registration">
@@ -104,6 +132,13 @@ const StyledButton = styled.button`
     border-radius: 5px;
     border: none;
     margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:disabled {
+        opacity: 0.7;
+    }
 `;
 
 const StyledLink = styled(Link)`

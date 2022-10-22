@@ -1,19 +1,22 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/images/logo.png";
 import ProjectContext from "../../constants/Context";
 import { signUpUrl } from "../../constants/Urls";
+import { ThreeDots } from "react-loader-spinner";
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function RegistrationPage() {
     const { user, setUser } = useContext(ProjectContext);
     const [loading, setLoading] = useState(false);
-    
+    const navigate = useNavigate();
 
     function signUp(event) {
         event.preventDefault();
-        setLoading(true)
+        setLoading(true);
+
         const body = {
             email: user.email,
             name: user.name,
@@ -25,13 +28,14 @@ export default function RegistrationPage() {
             .post(signUpUrl, body)
             .then((res) => {
                 console.log(res);
-                setLoading(false)
-                setUser({...user, email:''})
-                setUser({...user, password:''})
+                setLoading(false);
+                setUser({ ...user, email: "" });
+                setUser({ ...user, password: "" });
+                navigate("/");
             })
             .catch((err) => {
-                console.log(err)
-                setLoading(false)
+                alert(err.response.data.message)
+                setLoading(false);
             });
     }
 
@@ -40,7 +44,6 @@ export default function RegistrationPage() {
             <img src={logo} alt="logo" />
             <StyledForm onSubmit={signUp}>
                 <input
-                    type="email"
                     id="email"
                     placeholder="email"
                     value={user.email}
@@ -48,7 +51,7 @@ export default function RegistrationPage() {
                         setUser({ ...user, email: e.target.value });
                     }}
                     required
-                    disabled={(loading === true) ? true : false}
+                    disabled={loading === true ? true : false}
                 />
                 <input
                     type="password"
@@ -59,7 +62,7 @@ export default function RegistrationPage() {
                         setUser({ ...user, password: e.target.value });
                     }}
                     required
-                    disabled={(loading === true) ? true : false}
+                    disabled={loading === true ? true : false}
                 />
                 <input
                     type="text"
@@ -70,7 +73,7 @@ export default function RegistrationPage() {
                         setUser({ ...user, name: e.target.value });
                     }}
                     required
-                    disabled={(loading === true) ? true : false}
+                    disabled={loading === true ? true : false}
                 />
                 <input
                     type="url"
@@ -81,9 +84,18 @@ export default function RegistrationPage() {
                         setUser({ ...user, image: e.target.value });
                     }}
                     required
-                    disabled={(loading === true) ? true : false}
+                    disabled={loading === true ? true : false}
                 />
-                <StyledButton type="submit">Cadastrar</StyledButton>
+                <StyledButton
+                    type="submit"
+                    disabled={loading === true ? true : false}
+                >
+                    {loading === true ? (
+                        <ThreeDots width="50" height="13" color="#ffffff" />
+                    ) : (
+                        <p>Cadastrar</p>
+                    )}
+                </StyledButton>
             </StyledForm>
             <StyledLink to="/">Já tem uma conta? Faça o login!</StyledLink>
         </StyledPage>
@@ -132,6 +144,13 @@ const StyledButton = styled.button`
     border-radius: 5px;
     border: none;
     margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:disabled {
+        opacity: 0.7;
+    }
 `;
 
 const StyledLink = styled(Link)`

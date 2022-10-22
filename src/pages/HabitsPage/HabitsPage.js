@@ -1,32 +1,69 @@
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import SaveHabitsCard from "../../components/SaveHabitsCard";
 import HabitsList from "../../components/HabitsList";
+import ProjectContext from "../../constants/Context";
+import axios from "axios";
+import { habitsUrl } from "../../constants/Urls";
 
 export default function HabitsPage() {
     const [saveHabit, setSaveHabit] = useState(false);
-    const [habits, setHabits] = useState(undefined);
+    const [habits, setHabits] = useState([]);
+    const [habit, setHabit] = useState({ name: "", days: [] });
+    const { user, setUser } = useContext(ProjectContext);
+    
+
+    useEffect(() => {
+        getHabits();
+    }, []);
+
+    function getHabits() {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        axios
+            .get(habitsUrl, config)
+            .then((res) => {
+                const habitList = res.data;
+                setHabits(habitList);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                alert(err.response.data.message)
+            });
+    }
 
     return (
         <>
-            <NavBar />
-            <StyledPage>
+            <NavBar setUser={setUser} user={user} />
+            <StyledPage >
                 <TopContainer>
                     <p>Meus hábitos</p>
-                    <button>+</button>
+                    <button onClick={() => setSaveHabit(true)}>+</button>
                 </TopContainer>
                 <MidContainer>
-                    {saveHabit === true && <SaveHabitsCard />}
+                    {saveHabit === true && (
+                        <SaveHabitsCard
+                            setSaveHabit={setSaveHabit}
+                            user={user}
+                            habit={habit}
+                            setHabit={setHabit}
+                            getHabits={getHabits}
+                        />
+                    )}
                 </MidContainer>
                 <LowerContainer>
-                    {habits ? (
+                    {habits.length === 0 ? (
                         <p>
                             Você não tem nenhum hábito cadastrado ainda.
                             Adicione um hábito para começar a acompanhá-lo!
-                        </p>) : 
-                        (<HabitsList />
+                        </p>
+                    ) : (
+                        <HabitsList habits={habits} setHabits={setHabits} getHabits={getHabits}/>
                     )}
                 </LowerContainer>
             </StyledPage>
@@ -36,13 +73,13 @@ export default function HabitsPage() {
 }
 
 const StyledPage = styled.div`
-    background-color: #f2f2f2;
-    height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 70px 0 101px 0;
+    margin: 70px 0 0px 0;
+    padding-bottom: 90px;
+    box-sizing: border-box;
 
     img {
         margin: 68px 0 36.6px 0;
