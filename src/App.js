@@ -34,7 +34,7 @@ function App() {
                 setTodayHabits(tempHabits);
 
                 const doneHabits = tempHabits.filter((h) => h.done === true);
-                if (doneHabits.length !== 0) {
+                if (tempHabits.length !== 0) {
                     setProgress(doneHabits.length / tempHabits.length);
                 }
             })

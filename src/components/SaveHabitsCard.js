@@ -7,14 +7,13 @@ import { weekdays } from "../constants/constants";
 import { ThreeDots } from "react-loader-spinner";
 import ProjectContext from "../constants/Context";
 
-
 export default function SaveHabitsCard({
     setSaveHabit,
     habit,
     setHabit,
-    getHabits
+    getHabits,
 }) {
-    const {user, getTodayHabits} = useContext(ProjectContext)
+    const { user, getTodayHabits } = useContext(ProjectContext);
     const [loading, setLoading] = useState(false);
 
     function cancelHabit(event) {
@@ -23,28 +22,32 @@ export default function SaveHabitsCard({
     }
 
     function saveHabit(event) {
-        event.preventDefault();
-        setLoading(true);
-        const body = { name: habit.name, days: habit.days };
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        };
-        axios
-            .post(habitsUrl, body, config)
-            .then((res) => {
-                const resetHabit = { name: "", days: [] };
-                setHabit(resetHabit);
-                getHabits();
-                getTodayHabits()
-                setSaveHabit(false);
-                setLoading(false);
-            })
-            .catch((err) => {
-                alert(err.response.data.message);
-                setLoading(false);
-            });
+        if (habit.days.length > 0) {
+            event.preventDefault();
+            setLoading(true);
+            const body = { name: habit.name, days: habit.days };
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+            axios
+                .post(habitsUrl, body, config)
+                .then((res) => {
+                    const resetHabit = { name: "", days: [] };
+                    setHabit(resetHabit);
+                    getHabits();
+                    getTodayHabits();
+                    setSaveHabit(false);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    alert(err.response.data.message);
+                    setLoading(false);
+                });
+        } else {
+            alert('Você deve escolher pelo menos um dia da semana para realizar seu hábito regularmente =)')
+        }
     }
 
     return (
