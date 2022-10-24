@@ -1,14 +1,14 @@
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
-import { useContext } from "react";
+// import { useContext } from "react";
 import styled from "styled-components";
-import ProjectContext from "../../constants/Context";
+// import ProjectContext from "../../constants/Context";
 
 export default function HistoryPage() {
-    const { user, setUser } = useContext(ProjectContext);
+    // const { user, setUser } = useContext(ProjectContext);
     return (
         <>
-            <NavBar setUser={setUser} user={user} />
+            <NavBar/>
             <StyledPage>
                 <h1>Histórico</h1>
                 <p>

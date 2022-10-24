@@ -12,12 +12,12 @@ export default function HabitsPage() {
     const [saveHabit, setSaveHabit] = useState(false);
     const [habits, setHabits] = useState([]);
     const [habit, setHabit] = useState({ name: "", days: [] });
-    const { user, setUser } = useContext(ProjectContext);
+    const { user } = useContext(ProjectContext);
     
 
     useEffect(() => {
         getHabits();
-    }, []);
+    });
 
     function getHabits() {
         const config = {
@@ -39,7 +39,7 @@ export default function HabitsPage() {
 
     return (
         <>
-            <NavBar setUser={setUser} user={user} />
+            <NavBar/>
             <StyledPage >
                 <TopContainer>
                     <p>Meus hábitos</p>
@@ -49,7 +49,6 @@ export default function HabitsPage() {
                     {saveHabit === true && (
                         <SaveHabitsCard
                             setSaveHabit={setSaveHabit}
-                            user={user}
                             habit={habit}
                             setHabit={setHabit}
                             getHabits={getHabits}

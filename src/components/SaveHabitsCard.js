@@ -1,18 +1,20 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DaySave from "./DaySave";
 import { habitsUrl } from "../constants/Urls";
 import { weekdays } from "../constants/constants";
 import { ThreeDots } from "react-loader-spinner";
+import ProjectContext from "../constants/Context";
+
 
 export default function SaveHabitsCard({
     setSaveHabit,
-    user,
     habit,
     setHabit,
-    getHabits,
+    getHabits
 }) {
+    const {user, getTodayHabits} = useContext(ProjectContext)
     const [loading, setLoading] = useState(false);
 
     function cancelHabit(event) {
@@ -36,6 +38,7 @@ export default function SaveHabitsCard({
                 console.log(res);
                 setHabit(resetHabit);
                 getHabits();
+                getTodayHabits()
                 setSaveHabit(false);
                 setLoading(false);
             })

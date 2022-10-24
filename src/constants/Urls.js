@@ -10,8 +10,8 @@ export const habitsUrl =
 // Check habit = habitsUrl + '/HABIT_ID/check'
 // Uncheck habit = habitsUrl + '/HABIT_ID/uncheck'
 
-export const habitsToday =
+export const habitsTodayUrl =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
-export const habitsHistory =
+export const habitsHistoryUrl =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";

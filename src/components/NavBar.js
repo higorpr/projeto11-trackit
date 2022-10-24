@@ -1,9 +1,11 @@
-import userEvent from "@testing-library/user-event";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ProjectContext from "../constants/Context";
 
-export default function NavBar({ user, setUser }) {
+export default function NavBar() {
     const navigate = useNavigate();
+    const {user, setUser} = useContext(ProjectContext)
 
     function reload() {
         if (window.confirm('Você gostaria de se desconectar e voltar para a página de login?')) {

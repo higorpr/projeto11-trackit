@@ -2,21 +2,37 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styled from "styled-components";
 import TodayList from "../../components/TodayList";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../constants/Context";
+import dayjs from "dayjs";
+import { ptWeek } from "../../constants/constants";
 
 export default function TodayPage() {
-    const { user, setUser } = useContext(ProjectContext);
+    const { todayHabits, getTodayHabits, progress } = useContext(ProjectContext);
+    const now = dayjs();
+    const weekday = require("dayjs/plugin/weekday");
+    dayjs.extend(weekday);
+
+    useEffect(() => {
+        getTodayHabits();
+    }, []);
 
     return (
         <>
-            <NavBar setUser={setUser} user={user}/>
+            <NavBar />
             <StyledPage>
-                <PageTitle>Segunda, 17/05</PageTitle>
-                <PageP>Nenhum hábito concluído ainda</PageP>
+                <PageTitle>{`${
+                    ptWeek[now.weekday()]
+                }, ${now.date()}/${now.month()}`}</PageTitle>
+                <PageP>
+                    {todayHabits.length !== 0 ? (
+                        <ControlledSpan>{(progress*100).toFixed(1)}% dos hábitos concluídos</ControlledSpan>
+                    ) : (
+                        <>Nenhum hábito concluído ainda</>
+                    )}
+                </PageP>
                 <TodayList />
             </StyledPage>
-
             <Footer />
         </>
     );
@@ -51,4 +67,8 @@ const PageP = styled.p`
     text-align: left;
     font-weight: 400;
     line-height: 23px;
+`;
+
+const ControlledSpan = styled.span`
+    color: #8fc549;
 `;

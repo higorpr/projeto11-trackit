@@ -9,7 +9,7 @@ import { useContext } from "react";
 import ProjectContext from "../constants/Context";
 
 export default function Habit({ habit, getHabits }) {
-    const { user } = useContext(ProjectContext);
+    const { user,getTodayHabits } = useContext(ProjectContext);
 
     function removeHabit() {
         if (window.confirm("Você gostaria de excluir este hábito?")) {
@@ -22,6 +22,7 @@ export default function Habit({ habit, getHabits }) {
                 .then((res) => {
                     console.log(res);
                     getHabits();
+                    getTodayHabits();
                 })
                 .catch((err) => {
                     console.log(err);

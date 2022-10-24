@@ -1,39 +1,18 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import ProjectContext from "../constants/Context";
 import TodayCard from "./TodayCard";
 
 export default function TodayList() {
-    const habitEx = [
-        {
-            id: 3,
-            name: "Acordar",
-            done: true,
-            currentSequence: 1,
-            highestSequence: 1,
-        },
-        {
-            id: 4,
-            name: "Acordar",
-            done: true,
-            currentSequence: 1,
-            highestSequence: 1,
-        },
-        {
-            id: 5,
-            name: "Acordar",
-            done: true,
-            currentSequence: 1,
-            highestSequence: 1,
-        },
-    ];
+    
+const {todayHabits} =useContext(ProjectContext)
+
     return (
         <StyledList>
-            {habitEx.map((habit) => (
+            {todayHabits.map((habit) => (
                 <TodayCard
                     key={habit.id}
-                    name={habit.name}
-                    isDone={habit.done}
-                    ongoing={habit.currentSequence}
-                    record={habit.highestSequence}
+                    habit = {habit}
                 />
             ))}
         </StyledList>

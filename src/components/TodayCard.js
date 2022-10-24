@@ -1,16 +1,77 @@
 import styled from "styled-components";
 import { BsCheckLg } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
+import axios from "axios";
+import { useContext, useState } from "react";
+import ProjectContext from "../constants/Context";
+import { habitsUrl } from "../constants/Urls";
 
-export default function TodayCard({ name, isDone, ongoing, record }) {
-    // let backgroundIconColor = '#8fc549';
-let backgroundIconColor = '#E7E7E7';
+export default function TodayCard({ habit }) {
+    const { id, name, done, currentSequence, highestSequence } = habit;
+    const { user, getTodayHabits } = useContext(ProjectContext);
+
+    let grey = "#666666";
+    let green = "#8FC549";
+    let colorHighest;
+    let colorCurrent;
+
+    let backgroundIconColor = "#E7E7E7";
+    if (done === true) {
+        backgroundIconColor = green;
+        colorCurrent = green;
+    }
+
+    function checkClick() {
+        const config = { headers: { Authorization: `Bearer ${user.token}` } };
+        if (done !== true) {
+            const url = habitsUrl + `/${id}/check`;
+            axios
+                .post(url, {}, config)
+                .then((res) => {
+                    colorCurrent = green;
+                    getTodayHabits();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            const url = habitsUrl + `/${id}/uncheck`;
+            axios
+                .post(url, {}, config)
+                .then((res) => {
+                    colorCurrent = grey;
+                    getTodayHabits();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }
+
+    if (done === true) {
+        if (currentSequence >= highestSequence) {
+            colorHighest = green;
+        } else {
+            colorHighest = grey;
+        }
+    }
+
     return (
-        <StyledEntry>
+        <StyledEntry onClick={checkClick}>
             <CardText>
                 <CardTitle>{name}</CardTitle>
-                <CardP>Sequência atual: {ongoing} dias</CardP>
-                <CardP>Seu recorde: {record} dias</CardP>
+                <CardP>
+                    Sequência atual:{" "}
+                    <ControlSpanCurrent color={colorCurrent}>
+                        {currentSequence} {currentSequence > 1 ? "dias" : "dia"}{" "}
+                    </ControlSpanCurrent>
+                </CardP>
+                <CardP>
+                    Seu recorde:{" "}
+                    <ControlSpanCurrent color={colorHighest}>
+                        {highestSequence} {highestSequence > 1 ? "dias" : "dia"}{" "}
+                    </ControlSpanCurrent>
+                </CardP>
             </CardText>
             <CheckIcon backgroundIconColor={backgroundIconColor}>
                 <IconContext.Provider
@@ -58,9 +119,16 @@ const CardP = styled.p`
 const CheckIcon = styled.div`
     width: 69px;
     height: 69px;
-    background-color: ${props => props.backgroundIconColor};
+    background-color: ${(props) => props.backgroundIconColor};
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const ControlSpanCurrent = styled.span`
+    color: ${(props) => props.color};
+`;
+const ControlSpanHighest = styled.span`
+    color: ${(props) => props.color};
 `;
