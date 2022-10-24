@@ -9,6 +9,7 @@ import { habitsUrl } from "../constants/Urls";
 export default function TodayCard({ habit }) {
     const { id, name, done, currentSequence, highestSequence } = habit;
     const { user, getTodayHabits } = useContext(ProjectContext);
+    let clicked = false;
 
     let grey = "#666666";
     let green = "#8FC549";
@@ -22,25 +23,37 @@ export default function TodayCard({ habit }) {
     }
 
     function checkClick() {
-        const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        if (done !== true) {
-            const url = habitsUrl + `/${id}/check`;
-            axios
-                .post(url, {}, config)
-                .then((res) => {
-                    colorCurrent = green;
-                    getTodayHabits();
-                })
-                .catch((err) => {});
+        if (clicked === false) {
+            clicked = true;
+            const config = {
+                headers: { Authorization: `Bearer ${user.token}` },
+            };
+            if (done !== true) {
+                const url = habitsUrl + `/${id}/check`;
+                axios
+                    .post(url, {}, config)
+                    .then((res) => {
+                        colorCurrent = green;
+                        getTodayHabits();
+                        clicked = false;
+                    })
+                    .catch((err) => {
+                        clicked = false;
+                    });
+            } else {
+                const url = habitsUrl + `/${id}/uncheck`;
+                axios
+                    .post(url, {}, config)
+                    .then((res) => {
+                        colorCurrent = grey;
+                        getTodayHabits();
+                    })
+                    .catch((err) => {});
+            }
         } else {
-            const url = habitsUrl + `/${id}/uncheck`;
-            axios
-                .post(url, {}, config)
-                .then((res) => {
-                    colorCurrent = grey;
-                    getTodayHabits();
-                })
-                .catch((err) => {});
+            alert(
+                "Estamos trabalhando no seu hábito. Por favor, aguarde a sua última ação sobre esse hábito ser completada."
+            );
         }
     }
 

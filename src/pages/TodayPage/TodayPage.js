@@ -2,7 +2,7 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import styled from "styled-components";
 import TodayList from "../../components/TodayList";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ProjectContext from "../../constants/Context";
 import dayjs from "dayjs";
 import { ptWeek } from "../../constants/constants";
@@ -40,8 +40,8 @@ export default function TodayPage() {
 
 const StyledPage = styled.div`
     background-color: #f2f2f2;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
