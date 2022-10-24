@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function DaySave({ day, habit, setHabit, loading }) {
-    
     const [clicked, setClicked] = useState(false);
     let borderColor = "#d4d4d4";
     let backgroundColor = "#ffffff";
@@ -40,14 +39,14 @@ export default function DaySave({ day, habit, setHabit, loading }) {
     }
 
     function setDay(event) {
-        event.preventDefault()
+        event.preventDefault();
         let days;
         if (habit.days.includes(day) === true) {
             days = habit.days.filter((d) => d !== day);
         } else {
             days = [...habit.days, day];
         }
-        setHabit({ ...habit, days: days });        
+        setHabit({ ...habit, days: days });
         setClicked(!clicked);
     }
 

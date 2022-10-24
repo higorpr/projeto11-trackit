@@ -10,9 +10,8 @@ export default function TodayCard({ habit }) {
     const { id, name, done, currentSequence, highestSequence } = habit;
     const { user, getTodayHabits } = useContext(ProjectContext);
     let clicked = false;
-
-    let grey = "#666666";
-    let green = "#8FC549";
+    const grey = "#666666";
+    const green = "#8FC549";
     let colorHighest;
     let colorCurrent;
 
@@ -82,7 +81,10 @@ export default function TodayCard({ habit }) {
                     </ControlSpanCurrent>
                 </CardP>
             </CardText>
-            <CheckIcon backgroundIconColor={backgroundIconColor} data-identifier="done-habit-btn">
+            <CheckIcon
+                backgroundIconColor={backgroundIconColor}
+                data-identifier="done-habit-btn"
+            >
                 <IconContext.Provider
                     value={{ size: "35px", color: "#ffffff" }}
                 >

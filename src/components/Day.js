@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Day({ day, targetDays = [], habit, setHabit }) {
+export default function Day({ day, targetDays = [] }) {
     let dayString;
     let borderColor = "#d4d4d4";
     let backgroundColor = "#ffffff";
