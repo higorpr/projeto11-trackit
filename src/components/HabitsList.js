@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Habit from "./Habit";
 
-export default function HabitsList({habits, setHabits, getHabits}) {
+export default function HabitsList({habits, getHabits}) {
 
     
 

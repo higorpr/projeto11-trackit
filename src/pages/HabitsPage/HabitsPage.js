@@ -12,11 +12,12 @@ export default function HabitsPage() {
     const [saveHabit, setSaveHabit] = useState(false);
     const [habits, setHabits] = useState([]);
     const [habit, setHabit] = useState({ name: "", days: [] });
-    const { user } = useContext(ProjectContext);
+    const { user,getTodayHabits } = useContext(ProjectContext);
     
 
     useEffect(() => {
         getHabits();
+        getTodayHabits();
     });
 
     function getHabits() {
@@ -32,7 +33,6 @@ export default function HabitsPage() {
                 setHabits(habitList);
             })
             .catch((err) => {
-                console.log(err.response.data);
                 alert(err.response.data.message)
             });
     }

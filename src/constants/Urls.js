@@ -7,9 +7,6 @@ export const loginUrl =
 export const habitsUrl =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
-// Check habit = habitsUrl + '/HABIT_ID/check'
-// Uncheck habit = habitsUrl + '/HABIT_ID/uncheck'
-
 export const habitsTodayUrl =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 

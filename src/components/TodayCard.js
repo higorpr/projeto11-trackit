@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { BsCheckLg } from "react-icons/bs";
 import { IconContext } from "react-icons/lib";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import ProjectContext from "../constants/Context";
 import { habitsUrl } from "../constants/Urls";
 
@@ -31,9 +31,7 @@ export default function TodayCard({ habit }) {
                     colorCurrent = green;
                     getTodayHabits();
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .catch((err) => {});
         } else {
             const url = habitsUrl + `/${id}/uncheck`;
             axios
@@ -42,9 +40,7 @@ export default function TodayCard({ habit }) {
                     colorCurrent = grey;
                     getTodayHabits();
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
+                .catch((err) => {});
         }
     }
 
@@ -127,8 +123,5 @@ const CheckIcon = styled.div`
 `;
 
 const ControlSpanCurrent = styled.span`
-    color: ${(props) => props.color};
-`;
-const ControlSpanHighest = styled.span`
     color: ${(props) => props.color};
 `;

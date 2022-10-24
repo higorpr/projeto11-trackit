@@ -5,10 +5,14 @@ import ProjectContext from "../constants/Context";
 
 export default function NavBar() {
     const navigate = useNavigate();
-    const {user, setUser} = useContext(ProjectContext)
+    const { user, setUser } = useContext(ProjectContext);
 
     function reload() {
-        if (window.confirm('Você gostaria de se desconectar e voltar para a página de login?')) {
+        if (
+            window.confirm(
+                "Você gostaria de se desconectar e voltar para a página de login?"
+            )
+        ) {
             const newUser = {
                 email: "",
                 password: "",

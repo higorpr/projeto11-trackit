@@ -36,7 +36,6 @@ export default function HomePage() {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err.response);
                 if (err.response.status === 422) {
                     alert("Campo e-mail inválido");
                 } else {

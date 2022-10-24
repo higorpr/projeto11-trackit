@@ -6,7 +6,6 @@ import logo from "../../assets/images/logo.png";
 import ProjectContext from "../../constants/Context";
 import { signUpUrl } from "../../constants/Urls";
 import { ThreeDots } from "react-loader-spinner";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function RegistrationPage() {
     const { user, setUser } = useContext(ProjectContext);
@@ -27,7 +26,6 @@ export default function RegistrationPage() {
         axios
             .post(signUpUrl, body)
             .then((res) => {
-                console.log(res);
                 setLoading(false);
                 setUser({ ...user, email: "" });
                 setUser({ ...user, password: "" });

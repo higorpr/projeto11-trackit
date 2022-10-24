@@ -35,7 +35,6 @@ export default function SaveHabitsCard({
             .post(habitsUrl, body, config)
             .then((res) => {
                 const resetHabit = { name: "", days: [] };
-                console.log(res);
                 setHabit(resetHabit);
                 getHabits();
                 getTodayHabits()
@@ -43,7 +42,6 @@ export default function SaveHabitsCard({
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err);
                 alert(err.response.data.message);
                 setLoading(false);
             });

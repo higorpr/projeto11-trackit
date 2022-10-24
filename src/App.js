@@ -30,16 +30,15 @@ function App() {
         axios
             .get(habitsTodayUrl, config)
             .then((res) => {
-                console.log(res.data);
                 const tempHabits = res.data;
                 setTodayHabits(tempHabits);
 
                 const doneHabits = tempHabits.filter((h) => h.done === true);
-                setProgress(doneHabits.length / tempHabits.length);
+                if (doneHabits.length !== 0) {
+                    setProgress(doneHabits.length / tempHabits.length);
+                }
             })
-            .catch((err) => {
-                console.log(err.response.data);
-            });
+            .catch((err) => {});
     }
 
     return (
