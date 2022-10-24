@@ -43,7 +43,7 @@ export default function HabitsPage() {
             <StyledPage >
                 <TopContainer>
                     <p>Meus hábitos</p>
-                    <button onClick={() => setSaveHabit(true)}>+</button>
+                    <button data-identifier="create-habit-btn" onClick={() => setSaveHabit(true)}>+</button>
                 </TopContainer>
                 <MidContainer>
                     {saveHabit === true && (
@@ -57,7 +57,7 @@ export default function HabitsPage() {
                 </MidContainer>
                 <LowerContainer>
                     {habits.length === 0 ? (
-                        <p>
+                        <p data-identifier="no-habit-message">
                             Você não tem nenhum hábito cadastrado ainda.
                             Adicione um hábito para começar a acompanhá-lo!
                         </p>

@@ -58,6 +58,7 @@ export default function DaySave({ day, habit, setHabit, loading }) {
             color={color}
             onClick={setDay}
             disabled={loading}
+            data-identifier="week-day-btn"
         >
             {dayString}
         </DayButton>

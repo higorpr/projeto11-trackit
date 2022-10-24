@@ -66,7 +66,7 @@ export default function TodayCard({ habit }) {
     }
 
     return (
-        <StyledEntry onClick={checkClick}>
+        <StyledEntry onClick={checkClick} data-identifier="today-infos">
             <CardText>
                 <CardTitle>{name}</CardTitle>
                 <CardP>
@@ -82,7 +82,7 @@ export default function TodayCard({ habit }) {
                     </ControlSpanCurrent>
                 </CardP>
             </CardText>
-            <CheckIcon backgroundIconColor={backgroundIconColor}>
+            <CheckIcon backgroundIconColor={backgroundIconColor} data-identifier="done-habit-btn">
                 <IconContext.Provider
                     value={{ size: "35px", color: "#ffffff" }}
                 >

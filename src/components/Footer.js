@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <StyledFooter>
             <div>
-                <StyledLink to="/habits">
+                <StyledLink data-identifier="habit-page-action" to="/habits">
                     <p> Hábitos </p>
                 </StyledLink>
             </div>
@@ -32,7 +32,7 @@ export default function Footer() {
                 </ProgressBarDiv>
             </Link>
             <div>
-                <StyledLink to="/history">
+                <StyledLink data-identifier="historic-page-action" to="/history">
                     <p> Histórico </p>
                 </StyledLink>
             </div>

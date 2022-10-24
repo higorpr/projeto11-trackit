@@ -58,6 +58,7 @@ export default function HomePage() {
                     }}
                     required
                     disabled={loading}
+                    data-identifier='input-email'
                 />
                 <input
                     type="password"
@@ -69,11 +70,13 @@ export default function HomePage() {
                     }}
                     required
                     disabled={loading}
+                    data-identifier="input-password"
                 />
                 <StyledButton
                     type="submit"
                     disabled={loading}
                     onClick={login}
+                    data-identifier="login-btn"
                 >
                     {loading === true ? (
                         <ThreeDots width="50" height="13" color="#ffffff" />
@@ -82,8 +85,8 @@ export default function HomePage() {
                     )}
                 </StyledButton>
             </StyledForm>
-            <StyledLink to="/registration">
-                Não tem uma conta? Cadastre-se!
+            <StyledLink to="/registration" data-identifier="sign-up-action">
+                <p >Não tem uma conta? Cadastre-se!</p>
             </StyledLink>
         </StyledPage>
     );

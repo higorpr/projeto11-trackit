@@ -50,6 +50,7 @@ export default function RegistrationPage() {
                     }}
                     required
                     disabled={loading === true ? true : false}
+                    data-identifier="input-email"
                 />
                 <input
                     type="password"
@@ -61,6 +62,7 @@ export default function RegistrationPage() {
                     }}
                     required
                     disabled={loading === true ? true : false}
+                    data-identifier="input-password"
                 />
                 <input
                     type="text"
@@ -72,6 +74,7 @@ export default function RegistrationPage() {
                     }}
                     required
                     disabled={loading === true ? true : false}
+                    data-identifier="input-name"
                 />
                 <input
                     type="url"
@@ -83,6 +86,7 @@ export default function RegistrationPage() {
                     }}
                     required
                     disabled={loading === true ? true : false}
+                    data-identifier="input-photo"
                 />
                 <StyledButton
                     type="submit"
@@ -95,7 +99,7 @@ export default function RegistrationPage() {
                     )}
                 </StyledButton>
             </StyledForm>
-            <StyledLink to="/">Já tem uma conta? Faça o login!</StyledLink>
+            <StyledLink to="/" data-identifier="back-to-login-action">Já tem uma conta? Faça o login!</StyledLink>
         </StyledPage>
     );
 }

@@ -21,10 +21,10 @@ export default function TodayPage() {
         <>
             <NavBar />
             <StyledPage>
-                <PageTitle>{`${
+                <PageTitle data-identifier="today-infos">{`${
                     ptWeek[now.weekday()]
                 }, ${now.date()}/${now.month()}`}</PageTitle>
-                <PageP>
+                <PageP data-identifier="today-infos">
                     {todayHabits.length !== 0 ? (
                         <ControlledSpan>{(progress*100).toFixed(1)}% dos hábitos concluídos</ControlledSpan>
                     ) : (

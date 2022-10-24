@@ -29,9 +29,9 @@ export default function Habit({ habit, getHabits }) {
 
     return (
         <li key={habit.id}>
-            <p>{habit.name}</p>
+            <p data-identifier="habit-name">{habit.name}</p>
             <IconContext.Provider value={{ size: "15px" }}>
-                <ReactIcon onClick={removeHabit}>
+                <ReactIcon data-identifier="delete-habit-btn" onClick={removeHabit}>
                     <BsTrash />
                 </ReactIcon>
             </IconContext.Provider>

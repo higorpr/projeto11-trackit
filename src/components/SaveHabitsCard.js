@@ -62,6 +62,7 @@ export default function SaveHabitsCard({
                         setHabit({ ...habit, name: e.target.value });
                     }}
                     disabled={loading}
+                    data-identifier="input-habit-name"
                 />
                 <ButtonContainer>
                     {weekdays.map((day, idx) => (
@@ -75,10 +76,10 @@ export default function SaveHabitsCard({
                     ))}
                 </ButtonContainer>
                 <LowerContainer>
-                    <CancelButton onClick={cancelHabit} disabled={loading}>
+                    <CancelButton onClick={cancelHabit} disabled={loading} data-identifier="cancel-habit-create-btn">
                         Cancelar
                     </CancelButton>
-                    <SaveButton onClick={saveHabit} disabled={loading}>
+                    <SaveButton onClick={saveHabit} disabled={loading} data-identifier="save-habit-create-btn">
                         {loading === true ? (
                             <ThreeDots width="43" height="11" color="#ffffff" />
                         ) : (

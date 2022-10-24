@@ -28,7 +28,7 @@ export default function NavBar() {
     return (
         <StyledHeader>
             <p onClick={reload}>TrackIt</p>
-            <img src={user.image} alt="user icon" />
+            <img src={user.image} alt="user icon" data-identifier="avatar"/>
         </StyledHeader>
     );
 }
